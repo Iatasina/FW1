@@ -1,0 +1,109 @@
+<!doctype html>
+<html ng-app="purchaseApp">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body ng-controller="purchaseController">
+    <div class="page-header">
+        <h1>Запись</h1>
+    </div>
+    <div class="panel">
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="col-md-8">
+                	<h4>Имя</h4>
+					<input class="form-control" type="text" ng-model="name"placeholder = "Имя"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-8">
+                	<h4>Фамилия</h4>
+					<input class="form-control" type="text" ng-model="name2" placeholder = "Фамилия"/>
+                </div>
+            </div>
+			
+			<div class="form-group">
+                <div class="col-md-8">
+                	<h4>Дата рождения</h4>
+					<input class="form-control" type="date" ng-model="data" placeholder = "Дата рождения"/>
+                </div>
+            </div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<button class="btn btn-default" ng-click="addItem(name, name2, data)">Добавить</button>
+						</div>
+					</div>
+			
+            
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Дата рождения</th>
+					<th>Возраст</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in list.items">
+                    <td>{{item.name}}</td>
+                    <td>{{item.name2}}</td>
+					<td>{{item.data| date : "d MMMM y"}}</td>
+					<td>{{item.age}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<script>
+var model = {
+    items: [
+        {name: "Кирилл", name2: "Мальвинин", data: "2 June 2015", age:7},
+        {name: "Наталья", name2: "Жардин", data: "7 March 2018", age:4},
+        {name: "Евгений", name2: "Петров",data: "15 Jule 2016", age:6}
+    ]
+};
+var purchaseApp = angular.module("purchaseApp", []);
+    purchaseApp.controller("purchaseController", function ($scope) {
+    $scope.list = model;
+    $scope.name = ""; 
+	$scope.name2 = "";
+    $scope.data = "";
+	/*$scope.calculate = function (data) 
+			{
+				var today = new Date();
+				var birthDate = new Date(data);
+				var age = today.getFullYear() - birthDate.getFullYear();
+				var m = today.getMonth() - birthDate.getMonth();
+				if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+				{
+					age--;
+				}
+				return age;
+			}
+	*/
+    $scope.addItem = function (name, name2, data) {
+	
+        if(name && name2 && data) 
+        {
+            $scope.list.items.push({ name: name, name2:name2, data: data });
+            $scope.name = ""; 
+			$scope.name2 = "";
+			$scope.data = "";
+        }
+	  
+      else{ 
+      		alert( "Невозможно записать" );
+            $scope.name = ""; 
+			$scope.name2 = "";
+			$scope.data = "";
+      }
+    }
+});
+</script>
+</body>
+</html>
