@@ -1,0 +1,9 @@
+controllers:
+    resource: ../src/Controller/
+    type: attribute 
+index:
+    path: /hello/{name}
+    controller: App\Controller\IndexController::index
+app_lucky_number:
+    path: /lucky/number
+    controller: App\Controller\NumberController::number
